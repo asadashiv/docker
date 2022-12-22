@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'docker'}
+    agent {label 'slave_docker'}
     environment {
     DOCKERHUB_CREDENTIALS = credentials('docker')
     }
