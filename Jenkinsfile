@@ -18,7 +18,7 @@ pipeline {
         
         stage('build container') {
             steps{
-                sh 'sudo docker run -d -p 82:80 shivasada/project'
+                sh 'sudo docker run -d -p 81:80 shivasada/project'
             }
         }
         
