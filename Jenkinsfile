@@ -12,22 +12,22 @@ pipeline {
 
         stage('Build-image') {
             steps {  
-                sh 'docker build -t shivasada/project .'
+                sh 'sudo docker build -t shivasada/project .'
             }
         }
         stage('login') {
             steps{
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
         stage('push image') {
             steps{
-                sh 'docker push shivasada/project'
+                sh 'sudo docker push shivasada/project'
             }
         }
         stage('build container') {
             steps{
-                sh 'docker run -d -p 80:80 shivasada/project'
+                sh 'sudo docker run -d -p 80:80 shivasada/project'
             }
         }
     }        
