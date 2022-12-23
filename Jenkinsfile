@@ -1,8 +1,8 @@
 pipeline {
     agent {label 'slave_docker'}
     environment {
-  DOCKERHUB_CREDENTIALS = credentials('docker_project')
-}
+    DOCKERHUB_CREDENTIALS = credentials('docker_project')
+    }
     stages { 
         stage('clone') {
             steps{
