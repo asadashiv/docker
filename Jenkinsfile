@@ -1,7 +1,9 @@
 pipeline {
     agent {label 'slave_docker'}
     environment {
-    DOCKERHUB_CREDENTIALS = credentials('docker')
+    parameters {
+  credentials credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: 'docker', name: 'DOCKERHUB', required: false
+}
     }
     stages { 
         stage('clone') {
@@ -15,11 +17,6 @@ pipeline {
                 sh 'sudo docker build -t shivasada/project .'
             }
         }
-         stage('build container') {
-            steps{
-                sh 'sudo docker run -d -p 80:80 shivasada/project'
-            }
-        }
         stage('login') {
             steps{
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -30,6 +27,10 @@ pipeline {
                 sh 'sudo docker push shivasada/project'
             }
         }
-       
+        stage('build container') {
+            steps{
+                sh 'sudo docker run -d -p 81:80 shivasada/project'
+            }
+        }
     }        
 }
