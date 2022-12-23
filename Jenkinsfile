@@ -15,6 +15,13 @@ pipeline {
                 sh 'sudo docker build -t shivasada/project .'
             }
         }
+        
+        stage('build container') {
+            steps{
+                sh 'sudo docker run -d -p 82:80 shivasada/project'
+            }
+        }
+        
         stage('login') {
             steps{
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -25,10 +32,6 @@ pipeline {
                 sh 'sudo docker push shivasada/project'
             }
         }
-        stage('build container') {
-            steps{
-                sh 'sudo docker run -d -p 82:80 shivasada/project'
-            }
-        }
+        
     }        
 }
