@@ -1,10 +1,8 @@
 pipeline {
     agent {label 'slave_docker'}
-    environment {
     parameters {
   credentials credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: 'docker', name: 'DOCKERHUB', required: false
 }
-    }
     stages { 
         stage('clone') {
             steps{
