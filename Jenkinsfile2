@@ -1,0 +1,36 @@
+pipeline {
+    agent {label 'slave_docker'}
+    stages { 
+        stage('clone') {
+            steps{
+            git branch: 'main', url: 'https://github.com/asadashiv/docker.git'
+            }
+        }
+
+        stage('Build-image') {
+            steps {  
+                sh 'sudo docker build -t shivasada/project .'
+            }
+        }
+        
+        stage('build container') {
+            steps{
+                sh 'sudo docker run -d -p 91:80 shivasada/project'
+            }
+        }
+        
+        stage('login') {
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'docker22', passwordVariable: 'passwd', usernameVariable: 'name')]) {
+                docker login -u $(name) -p $(passwd)
+                }
+            }
+        }
+        stage('push image') {
+            steps{
+                sh 'sudo docker push shivasada/project'
+            }
+        }
+        
+    }        
+}
