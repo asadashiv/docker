@@ -15,14 +15,14 @@ pipeline {
         
         stage('build container') {
             steps{
-                sh 'sudo docker run -d -p 92:80 shivasada/project'
+                sh 'sudo docker run -d -p 93:80 shivasada/project'
             }
         }
         
         stage('login') {
             steps{
                 withCredentials([usernamePassword(credentialsId: 'docker22', passwordVariable: 'passwd', usernameVariable: 'name')]) {
-                sh 'docker login -u $name -p $passwd'
+                sh 'sudo docker login -u $name -p $passwd'
                 }
             }
         }
