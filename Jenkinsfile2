@@ -22,7 +22,7 @@ pipeline {
         stage('login') {
             steps{
                 withCredentials([usernamePassword(credentialsId: 'docker22', passwordVariable: 'passwd', usernameVariable: 'name')]) {
-                docker login -u $(name) -p $(passwd)
+                sh 'docker login -u $name -p $passwd'
                 }
             }
         }
